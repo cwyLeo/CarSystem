@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/statics/css/style.css" />
+<title>search</title>
+</head>
+<style>
+    .form1{
+        padding: 10px 0;
+        min-height: 250px;
+        background-color: pink;
+        align-items: center;
+        text-align: center;
+        /* height: 200px; */
+    }
+    nav:has(.li1:hover) ~ .sub_class1{
+        display: block;
+        visibility: visible;
+    }
+    nav:has(.li2:hover) ~ .sub_class2{
+        display: block;
+        visibility: visible;
+    }
+    nav:has(.li3:hover) ~ .sub_class3{
+        display: block;
+        visibility: visible;
+    }
+    nav:has(.li0:hover) ~ .sub_class0{
+        display: block;
+        visibility: visible;
+    }
+    .sub_class0,.sub_class1,.sub_class2,.sub_class3{
+        visibility: hidden;
+        display: none;
+        height: 30px;
+        line-height: 30px;
+        /* height: 5px; */
+        /* position: absolute; */
+    }
+    nav li{
+        margin: 0 auto;
+        line-height: 50px;
+        height: 50px;
+    }
+    .sub_class0:hover,.sub_class1:hover,.sub_class2:hover,.sub_class3:hover{
+        visibility: visible;
+        display: block;
+    }
+</style>
+<body>
+    <nav>
+        <ul>
+            <li class="li0 master"><a href="{% url 'search-post' %}?table=car&user={{user}}">新建数据</a></li>
+            <li class="customer-li"><a href="{% url 'search-post' %}?table=buy&user={{user}}">购买车辆</a></li>
+            <li class="master"><a href="#" style="color: white;">删除数据</a></li>
+            <li><a href="{% url 'search-form' %}?user={{user}}">关键词搜索</a></li>
+            <li class="master"><a href="{% url 'sql-form' %}?user={{user}}">SQL查询</a></li>
+            <li class="li1 master">工厂排名</li>
+            <li class="customer-li"><a href="{% url 'cust-form' %}?user={{user}}">查询库存</a></li>
+            <li class="li2">汽车排名</li>
+            <li class="li3 master">客户排名</li>
+            <li class="li4 master"><a href="{% url 'OLAP' %}?user={{user}}">数据分析</a></li>
+        </ul>
+    </nav>
+    <div class="sub_class0">
+        <ul>
+            <li><a href="{% url 'search-post' %}?table=car&user={{user}}">增加车种类</a></li>
+            <li><a href="{% url 'search-post' %}?table=industry&user={{user}}">增加工厂</a></li>
+            <li><a href="{% url 'search-post' %}?table=buy&user={{user}}">购买车辆</a></li>
+            <li><a href="{% url 'search-post' %}?table=build&user={{user}}">制造车辆</a></li>
+            <li><a href="{% url 'search-post' %}?table=customer&user={{user}}">增加顾客</a></li>
+        </ul>
+    </div>
+    <div class="sub_class1">
+        <ul>
+            <li><a href="{% url 'rank' %}?table=industry1&user={{user}}">按总利润排名</a></li>
+            <li><a href="{% url 'rank' %}?table=industry2&user={{user}}">按买入量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=industry3&user={{user}}">按卖出量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=industry4&user={{user}}">按剩余量排名</a></li>
+        </ul>
+    </div>
+    <div class="sub_class2">
+        <ul>
+            <li><a href="{% url 'rank' %}?table=car1&user={{user}}">按汽车-利润排名</a></li>
+            <li><a href="{% url 'rank' %}?table=car2&user={{user}}">按品牌-利润排名</a></li>
+            <li><a href="{% url 'rank' %}?table=car3&user={{user}}">按汽车-买入量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=car4&user={{user}}">按品牌-买入量排名</a></li>
+        </ul>
+    </div>
+    <div class="sub_class3">
+        <ul>
+            <li><a href="{% url 'rank' %}?table=customer1&user={{user}}">按买入量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=customer2&user={{user}}">按买入金额排名</a></li>
+        </ul>
+    </div>
+    <div class="form1">
+    <form action="/delete/" method="get">
+        <input style="display: none;" type="text" name="user" id="user" value="{{user}}">
+        <select type="text" name="class" id="class">
+            <option value="blank"></option>
+            <option value="car">car</option>
+            <option value="buy">buy</option>
+            <option value="build">build</option>
+            <option value="customer">customer</option>
+            <option value="industry">industry</option>
+        </select>
+        <button type="button" onclick="addcond()">+key</button>
+        <p id="cond0"></p>
+        <p id="cond1"></p>
+        <p id="cond2"></p>
+        <p id="cond3"></p>
+        <p id="cond4"></p>
+        <p id="cond5"></p>
+        <p id="cond6"></p>
+        <p id="cond7"></p>
+        <p id="cond8"></p>
+        <p id="cond9"></p>
+        <input type="submit" value="删除">
+    </form>
+</div>
+<p style="display: none;" id="user2">{{user}}</p>
+<nav style="line-height: 50px; vertical-align: middle; height: 50px; color: white;"># car system #</nav>
+</body>
+<script>
+    items = document.getElementsByClassName("master");
+    for(i = 0;i < items.length;i++)
+    {
+        if(document.getElementById("user2").innerText != "admin")items[i].style["display"] = "none";
+    }
+    items2 = document.getElementsByClassName("customer-li")
+    for(i = 0;i < items2.length;i++)
+    {
+        if(document.getElementById("user2").innerText != "customer")
+        {
+            items2[i].style["display"] = "none";
+        }
+    }
+    var cond = -1;
+    var text = "";
+    function addcond(){
+        cond += 1;
+        text = "key"+(cond+1)+":<input type='text' name='conds"+cond+"'>value"+(cond+1)+":<input type='text' name='val"+cond+"'><br>";
+        if(cond>=9)
+        {
+            alert("out of range!");
+        }
+        else
+        {
+            document.getElementById("cond"+cond).innerHTML = text;
+        }
+    }
+</script>
+</html>

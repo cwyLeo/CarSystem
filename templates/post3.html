@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/statics/css/style.css" />
+<title>addddata</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    form{
+        text-align: center;
+        vertical-align: middle;
+        background-color: pink;
+        padding: 20px 0;
+    }
+    form input{
+        margin: 30px 0;
+    }
+    form input:last-of-type{
+        width: 80px;
+    }
+    nav:has(.li1:hover) ~ .sub_class1{
+        display: block;
+        visibility: visible;
+    }
+    nav:has(.li2:hover) ~ .sub_class2{
+        display: block;
+        visibility: visible;
+    }
+    nav:has(.li3:hover) ~ .sub_class3{
+        display: block;
+        visibility: visible;
+    }
+    nav:has(.li0:hover) ~ .sub_class0{
+        display: block;
+        visibility: visible;
+    }
+    .sub_class0,.sub_class1,.sub_class2,.sub_class3{
+        visibility: hidden;
+        display: none;
+        height: 30px;
+        line-height: 30px;
+        /* height: 5px; */
+        /* position: absolute; */
+    }
+    nav li{
+        margin: 0 auto;
+        line-height: 50px;
+        height: 50px;
+    }
+    .sub_class0:hover,.sub_class1:hover,.sub_class2:hover,.sub_class3:hover{
+        visibility: visible;
+        display: block;
+    }
+    select{
+        width: 166.5px;
+        height: 19.5px;
+        text-align: center;
+        margin: 30px 0;
+    }
+</style>
+<body>
+    <nav>
+        <ul>
+            <li class="li0 master"><a href="#" style="color: white;">新建数据</a></li>
+            <li class="customer-li"><a href="{% url 'search-post' %}?table=buy&user={{user}}">购买车辆</a></li>
+            <li class="master"><a href="{% url 'del-form' %}?user={{user}}">删除数据</a></li>
+            <li><a href="{% url 'search-form' %}?user={{user}}">关键词搜索</a></li>
+            <li class="master"><a href="{% url 'sql-form' %}?user={{user}}">SQL查询</a></li>
+            <li class="li1 master market">工厂排名</li>
+            <li class="customer-li"><a href="{% url 'cust-form' %}?user={{user}}">查询库存</a></li>
+            <li class="li2">汽车排名</li>
+            <li class="li3 master market">客户排名</li>
+            <li class="li4 master market"><a href="{% url 'OLAP' %}?user={{user}}">数据分析</a></li>
+        </ul>
+    </nav>
+    <div class="sub_class0">
+        <ul>
+            <li><a href="{% url 'search-post' %}?table=car&user={{user}}">增加车种类</a></li>
+            <li><a href="{% url 'search-post' %}?table=industry&user={{user}}">增加工厂</a></li>
+            <li><a href="{% url 'search-post' %}?table=buy&user={{user}}">购买车辆</a></li>
+            <li><a href="{% url 'search-post' %}?table=build&user={{user}}">制造车辆</a></li>
+            <li><a href="{% url 'search-post' %}?table=customer&user={{user}}">增加顾客</a></li>
+        </ul>
+    </div>
+    <div class="sub_class1">
+        <ul>
+            <li><a href="{% url 'rank' %}?table=industry1&user={{user}}">按总利润排名</a></li>
+            <li><a href="{% url 'rank' %}?table=industry2&user={{user}}">按买入量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=industry3&user={{user}}">按卖出量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=industry4&user={{user}}">按剩余量排名</a></li>
+        </ul>
+    </div>
+    <div class="sub_class2">
+        <ul>
+            <li><a href="{% url 'rank' %}?table=car1&user={{user}}">按汽车-利润排名</a></li>
+            <li><a href="{% url 'rank' %}?table=car2&user={{user}}">按品牌-利润排名</a></li>
+            <li><a href="{% url 'rank' %}?table=car3&user={{user}}">按汽车-买入量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=car4&user={{user}}">按品牌-买入量排名</a></li>
+        </ul>
+    </div>
+    <div class="sub_class3">
+        <ul>
+            <li><a href="{% url 'rank' %}?table=customer1&user={{user}}">按买入量排名</a></li>
+            <li><a href="{% url 'rank' %}?table=customer2&user={{user}}">按买入金额排名</a></li>
+        </ul>
+    </div>
+    <form action="/search-post/" method="post">
+        {% csrf_token %}
+        表名：industry<br>
+        <input style="display: none;" type="text" name="table" id="" value="industry">
+        <input style="display: none;" type="text" name="user" id="user" value="{{user}}">
+        编号：<input type="text" name="n" maxlength="5"><br>
+        销售额：<input type="number" name="o" min="0"><br>
+        买入量：<input type="number" name="p" min="0"><br>
+        剩余量：<input type="number" name="q" min="0"><br>
+        卖出量：<input type="number" name="r" min="0"><br>
+        <input type="submit" value="添加数据">
+    </form>
+    <p id="user2" style="display: none;">{{user}}</p>
+    <p>{{ rlt }}</p>
+    <nav style="line-height: 50px; vertical-align: middle; height: 50px; color: white;"># car system #</nav>
+</body>
+<script src="/statics/js/visale.js"></script>
+</html>

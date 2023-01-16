@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 60px;
+        background: url(https://www.db-book.com/university-lab-dir/exercises-dir/images/db7-cover.jpg) center center;
+        background-size: cover;
+        background-position: 20 0;
+        height: 100%;
+        width: 1100px;
+        text-align: center;
+        /* background-repeat: repeat-x; */
+    }
+    form{
+        box-sizing: border-box;
+        background: #fff;
+        opacity: 0.8;
+        align-items: center;
+        margin: 120px auto 20px;
+        box-shadow: 0 0 15px 10px #fff; 
+        /* height: 500px; */
+        width: 500px;
+        padding: 10px;
+        font-size: 20px;
+        font-weight: 700;
+    }
+    input{
+        display: inline-block;
+        margin: 30px 20px;
+        width: 200px;
+        height: 20px;
+    }
+    button{
+        text-align: center;
+        height: 25px;
+        color: grey;
+        transition: 0.5s;
+        background-color: #fff;
+        /* width: 30px; */
+    }
+    button:hover{
+        color: black;
+        background-color: skyblue;
+        border-color: skyblue;
+    }
+</style>
+<body>
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        username:<input type="text" name="username" id="username"><br>
+        password:<input type="password" name="pwd" id="pwd"><br>
+        <input type="submit" value="login">
+    </form>
+</body>
+</html>
